@@ -24,11 +24,12 @@ function Layout() {
   return (
     <SidebarProvider>
       <AppSidebar />
-      <SidebarInset>
-        <header className="sticky top-0 z-10 flex h-16 shrink-0 items-center gap-2 border-b bg-background px-4">
+      <SidebarInset className="relative overflow-hidden bg-background">
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-80 bg-[radial-gradient(circle_at_75%_0%,color-mix(in_oklab,var(--foreground)_5%,transparent),transparent_48%)]" />
+        <header className="sticky top-0 z-10 flex h-16 shrink-0 items-center gap-2 border-b bg-background/85 px-4 backdrop-blur-xl">
           <SidebarTrigger className="-ml-1 text-muted-foreground" />
         </header>
-        <main className="flex-1 p-6 md:p-8">
+        <main className="relative flex-1 p-6 md:p-8">
           <div className="mx-auto max-w-7xl">
             <Outlet />
           </div>

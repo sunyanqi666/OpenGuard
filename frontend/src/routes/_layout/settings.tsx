@@ -1,5 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router"
+import { Settings } from "lucide-react"
 
+import { PageHeader } from "@/components/Common/PageHeader"
 import ChangePassword from "@/components/UserSettings/ChangePassword"
 import DeleteAccount from "@/components/UserSettings/DeleteAccount"
 import UserInformation from "@/components/UserSettings/UserInformation"
@@ -7,9 +9,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import useAuth from "@/hooks/useAuth"
 
 const tabsConfig = [
-  { value: "my-profile", title: "My profile", component: UserInformation },
-  { value: "password", title: "Password", component: ChangePassword },
-  { value: "danger-zone", title: "Danger zone", component: DeleteAccount },
+  { value: "my-profile", title: "个人资料", component: UserInformation },
+  { value: "password", title: "修改密码", component: ChangePassword },
+  { value: "danger-zone", title: "危险操作", component: DeleteAccount },
 ]
 
 export const Route = createFileRoute("/_layout/settings")({
@@ -17,7 +19,7 @@ export const Route = createFileRoute("/_layout/settings")({
   head: () => ({
     meta: [
       {
-        title: "Settings - FastAPI Template",
+        title: "个人设置 - OpenGuard",
       },
     ],
   }),
@@ -35,12 +37,12 @@ function UserSettings() {
 
   return (
     <div className="flex flex-col gap-6">
-      <div>
-        <h1 className="text-2xl font-bold tracking-tight">User Settings</h1>
-        <p className="text-muted-foreground">
-          Manage your account settings and preferences
-        </p>
-      </div>
+      <PageHeader
+        title="个人设置"
+        description="管理个人资料、登录密码和账号状态"
+        icon={<Settings />}
+        signal="账户安全连接正常"
+      />
 
       <Tabs defaultValue="my-profile">
         <TabsList>

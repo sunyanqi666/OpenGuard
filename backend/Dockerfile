@@ -50,6 +50,7 @@ COPY ./backend/scripts /app/backend/scripts
 COPY ./backend/pyproject.toml ./backend/alembic.ini /app/backend/
 
 COPY ./backend/app /app/backend/app
+COPY ./backend/tests /app/backend/tests
 
 COPY --from=frontend-build /app/backend/app/frontend /app/backend/app/frontend
 

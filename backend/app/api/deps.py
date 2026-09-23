@@ -11,7 +11,7 @@ from sqlmodel import Session
 from app.core import security
 from app.core.config import settings
 from app.core.db import engine
-from app.models import TokenPayload, User
+from app.models import TokenPayload, User, UserRole
 
 reusable_oauth2 = OAuth2PasswordBearer(
     tokenUrl=f"{settings.API_V1_STR}/login/access-token"
@@ -40,7 +40,11 @@ def get_current_user(session: SessionDep, token: TokenDep) -> User:
         )
     user = session.get(User, token_data.sub)
     if not user:
-        raise HTTPException(status_code=404, detail="User not found")
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Authentication session is no longer valid",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
     if not user.is_active:
         raise HTTPException(status_code=400, detail="Inactive user")
     return user
@@ -55,3 +59,17 @@ def get_current_active_superuser(current_user: CurrentUser) -> User:
             status_code=403, detail="The user doesn't have enough privileges"
         )
     return current_user
+
+
+CurrentSuperuser = Annotated[User, Depends(get_current_active_superuser)]
+
+
+def get_security_editor(current_user: CurrentUser) -> User:
+    if not current_user.is_superuser and current_user.role != UserRole.SECURITY:
+        raise HTTPException(
+            status_code=403, detail="Security editor privileges are required"
+        )
+    return current_user
+
+
+CurrentSecurityEditor = Annotated[User, Depends(get_security_editor)]

@@ -1,10 +1,11 @@
 import { useSuspenseQuery } from "@tanstack/react-query"
 import { createFileRoute } from "@tanstack/react-router"
-import { Search } from "lucide-react"
+import { Database, Search } from "lucide-react"
 import { Suspense } from "react"
 
 import { ItemsService } from "@/client"
 import { DataTable } from "@/components/Common/DataTable"
+import { PageHeader } from "@/components/Common/PageHeader"
 import AddItem from "@/components/Items/AddItem"
 import { columns } from "@/components/Items/columns"
 import PendingItems from "@/components/Pending/PendingItems"
@@ -22,7 +23,7 @@ export const Route = createFileRoute("/_layout/items")({
   head: () => ({
     meta: [
       {
-        title: "Items - FastAPI Template",
+        title: "数据管理 - OpenGuard",
       },
     ],
   }),
@@ -57,13 +58,13 @@ function ItemsTable() {
 function Items() {
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold tracking-tight">Items</h1>
-          <p className="text-muted-foreground">Create and manage your items</p>
-        </div>
-        <AddItem />
-      </div>
+      <PageHeader
+        title="数据管理"
+        description="创建并管理系统基础数据"
+        icon={<Database />}
+        actions={<AddItem />}
+        signal="数据服务在线"
+      />
       <ItemsTable />
     </div>
   )

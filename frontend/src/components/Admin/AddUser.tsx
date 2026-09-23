@@ -5,7 +5,7 @@ import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
-import { type UserCreate, UsersService } from "@/client"
+import { type UserCreate, type UserRole, UsersService } from "@/client"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import {
@@ -33,20 +33,19 @@ import { handleError } from "@/utils"
 
 const formSchema = z
   .object({
-    email: z.email({ message: "Invalid email address" }),
+    email: z.email({ message: "请输入有效的邮箱地址" }),
     full_name: z.string().optional(),
     password: z
       .string()
-      .min(1, { message: "Password is required" })
-      .min(8, { message: "Password must be at least 8 characters" }),
-    confirm_password: z
-      .string()
-      .min(1, { message: "Please confirm your password" }),
+      .min(1, { message: "请输入密码" })
+      .min(8, { message: "密码至少需要 8 个字符" }),
+    confirm_password: z.string().min(1, { message: "请再次输入密码" }),
     is_superuser: z.boolean(),
     is_active: z.boolean(),
+    role: z.enum(["ADMIN", "SECURITY", "VIEWER"]),
   })
   .refine((data) => data.password === data.confirm_password, {
-    message: "The passwords don't match",
+    message: "两次输入的密码不一致",
     path: ["confirm_password"],
   })
 
@@ -68,13 +67,14 @@ const AddUser = () => {
       confirm_password: "",
       is_superuser: false,
       is_active: false,
+      role: "VIEWER",
     },
   })
 
   const mutation = useMutation({
     mutationFn: (data: UserCreate) => UsersService.createUser({ body: data }),
     onSuccess: () => {
-      showSuccessToast("User created successfully")
+      showSuccessToast("用户创建成功")
       form.reset()
       setIsOpen(false)
     },
@@ -85,7 +85,7 @@ const AddUser = () => {
   })
 
   const onSubmit = (data: FormData) => {
-    mutation.mutate(data)
+    mutation.mutate({ ...data, is_superuser: data.role === "ADMIN" })
   }
 
   return (
@@ -93,14 +93,14 @@ const AddUser = () => {
       <DialogTrigger asChild>
         <Button className="my-4">
           <Plus className="mr-2" />
-          Add User
+          新增用户
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>Add User</DialogTitle>
+          <DialogTitle>新增用户</DialogTitle>
           <DialogDescription>
-            Fill in the form below to add a new user to the system.
+            填写账号信息并为用户分配系统角色。
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
@@ -112,11 +112,11 @@ const AddUser = () => {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>
-                      Email <span className="text-destructive">*</span>
+                      邮箱 <span className="text-destructive">*</span>
                     </FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="Email"
+                        placeholder="user@example.com"
                         type="email"
                         {...field}
                         required
@@ -132,9 +132,9 @@ const AddUser = () => {
                 name="full_name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Full Name</FormLabel>
+                    <FormLabel>姓名</FormLabel>
                     <FormControl>
-                      <Input placeholder="Full name" type="text" {...field} />
+                      <Input placeholder="请输入姓名" type="text" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -147,11 +147,11 @@ const AddUser = () => {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>
-                      Set Password <span className="text-destructive">*</span>
+                      设置密码 <span className="text-destructive">*</span>
                     </FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="Password"
+                        placeholder="至少 8 个字符"
                         type="password"
                         {...field}
                         required
@@ -168,16 +168,39 @@ const AddUser = () => {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>
-                      Confirm Password{" "}
-                      <span className="text-destructive">*</span>
+                      确认密码 <span className="text-destructive">*</span>
                     </FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="Password"
+                        placeholder="请再次输入密码"
                         type="password"
                         {...field}
                         required
                       />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="role"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>系统角色</FormLabel>
+                    <FormControl>
+                      <select
+                        className="h-9 w-full rounded-md border bg-background px-3 text-sm"
+                        {...field}
+                        onChange={(event) =>
+                          field.onChange(event.target.value as UserRole)
+                        }
+                      >
+                        <option value="VIEWER">观察者（只读）</option>
+                        <option value="SECURITY">安全人员（关联与处置）</option>
+                        <option value="ADMIN">管理员（完整权限）</option>
+                      </select>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -192,10 +215,15 @@ const AddUser = () => {
                     <FormControl>
                       <Checkbox
                         checked={field.value}
-                        onCheckedChange={field.onChange}
+                        onCheckedChange={(checked) => {
+                          field.onChange(checked)
+                          form.setValue("role", checked ? "ADMIN" : "VIEWER")
+                        }}
                       />
                     </FormControl>
-                    <FormLabel className="font-normal">Is superuser?</FormLabel>
+                    <FormLabel className="font-normal">
+                      设为超级管理员
+                    </FormLabel>
                   </FormItem>
                 )}
               />
@@ -211,7 +239,7 @@ const AddUser = () => {
                         onCheckedChange={field.onChange}
                       />
                     </FormControl>
-                    <FormLabel className="font-normal">Is active?</FormLabel>
+                    <FormLabel className="font-normal">启用账号</FormLabel>
                   </FormItem>
                 )}
               />
@@ -220,11 +248,11 @@ const AddUser = () => {
             <DialogFooter>
               <DialogClose asChild>
                 <Button variant="outline" disabled={mutation.isPending}>
-                  Cancel
+                  取消
                 </Button>
               </DialogClose>
               <LoadingButton type="submit" loading={mutation.isPending}>
-                Save
+                保存
               </LoadingButton>
             </DialogFooter>
           </form>

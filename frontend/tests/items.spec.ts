@@ -10,8 +10,8 @@ import { logInUser } from "./utils/user"
 
 test("Items page is accessible and shows correct title", async ({ page }) => {
   await page.goto("/items")
-  await expect(page.getByRole("heading", { name: "Items" })).toBeVisible()
-  await expect(page.getByText("Create and manage your items")).toBeVisible()
+  await expect(page.getByRole("heading", { name: "数据管理" })).toBeVisible()
+  await expect(page.getByText("创建并管理系统基础数据")).toBeVisible()
 })
 
 test("Add Item button is visible", async ({ page }) => {

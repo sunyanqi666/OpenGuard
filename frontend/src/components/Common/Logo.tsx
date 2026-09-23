@@ -1,11 +1,6 @@
 import { Link } from "@tanstack/react-router"
 
-import { useTheme } from "@/components/theme-provider"
 import { cn } from "@/lib/utils"
-import icon from "/assets/images/fastapi-icon.svg"
-import iconLight from "/assets/images/fastapi-icon-light.svg"
-import logo from "/assets/images/fastapi-logo.svg"
-import logoLight from "/assets/images/fastapi-logo-light.svg"
 
 interface LogoProps {
   variant?: "full" | "icon" | "responsive"
@@ -18,38 +13,33 @@ export function Logo({
   className,
   asLink = true,
 }: LogoProps) {
-  const { resolvedTheme } = useTheme()
-  const isDark = resolvedTheme === "dark"
-
-  const fullLogo = isDark ? logoLight : logo
-  const iconLogo = isDark ? iconLight : icon
-
   const content =
     variant === "responsive" ? (
       <>
-        <img
-          src={fullLogo}
-          alt="FastAPI"
+        <span
           className={cn(
-            "h-6 w-auto group-data-[collapsible=icon]:hidden",
+            "flex items-center gap-2.5 group-data-[collapsible=icon]:hidden",
             className,
           )}
-        />
-        <img
-          src={iconLogo}
-          alt="FastAPI"
-          className={cn(
-            "size-5 hidden group-data-[collapsible=icon]:block",
-            className,
-          )}
-        />
+        >
+          <BrandMark />
+          <span className="text-base font-semibold tracking-tight">
+            OpenGuard
+          </span>
+        </span>
+        <span className="hidden group-data-[collapsible=icon]:block">
+          <BrandMark compact />
+        </span>
       </>
     ) : (
-      <img
-        src={variant === "full" ? fullLogo : iconLogo}
-        alt="FastAPI"
-        className={cn(variant === "full" ? "h-6 w-auto" : "size-5", className)}
-      />
+      <span className={cn("flex items-center gap-3", className)}>
+        <BrandMark compact={variant === "icon"} />
+        {variant === "full" && (
+          <span className="text-xl font-semibold tracking-tight">
+            OpenGuard
+          </span>
+        )}
+      </span>
     )
 
   if (!asLink) {
@@ -57,4 +47,18 @@ export function Logo({
   }
 
   return <Link to="/">{content}</Link>
+}
+
+function BrandMark({ compact = false }: { compact?: boolean }) {
+  return (
+    <span
+      aria-hidden="true"
+      className={cn(
+        "grid shrink-0 place-items-center rounded-full bg-foreground font-semibold text-background shadow-[0_0_28px_color-mix(in_oklab,currentColor_18%,transparent)]",
+        compact ? "size-7 text-[10px]" : "size-9 text-xs",
+      )}
+    >
+      O
+    </span>
+  )
 }

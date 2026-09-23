@@ -5,6 +5,87 @@ export type ClientOptions = {
 };
 
 /**
+ * AssociationStatus
+ */
+export type AssociationStatus = 'SUGGESTED' | 'CONFIRMED' | 'REJECTED';
+
+/**
+ * AssociationSuggestion
+ */
+export type AssociationSuggestion = {
+    component: ComponentPublic;
+    match_method: MatchMethod;
+    /**
+     * Confidence
+     */
+    confidence: string;
+    /**
+     * Reason
+     */
+    reason: string;
+};
+
+/**
+ * AuditAction
+ */
+export type AuditAction = 'CREATE' | 'UPDATE' | 'DELETE' | 'LINK' | 'UNLINK' | 'STATUS_CHANGE';
+
+/**
+ * AuditLogPublic
+ */
+export type AuditLogPublic = {
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Actor Id
+     */
+    actor_id: string | null;
+    /**
+     * Actor Email
+     */
+    actor_email?: string | null;
+    action: AuditAction;
+    /**
+     * Resource Type
+     */
+    resource_type: string;
+    /**
+     * Resource Id
+     */
+    resource_id: string;
+    /**
+     * Summary
+     */
+    summary: string | null;
+    /**
+     * Changes
+     */
+    changes: {
+        [key: string]: unknown;
+    };
+    /**
+     * Created At
+     */
+    created_at: string;
+};
+
+/**
+ * AuditLogsPublic
+ */
+export type AuditLogsPublic = {
+    /**
+     * Data
+     */
+    data: Array<AuditLogPublic>;
+    /**
+     * Count
+     */
+    count: number;
+};
+
+/**
  * Body_login-login_access_token
  */
 export type Body_login_login_access_token = {
@@ -35,6 +116,312 @@ export type Body_login_login_access_token = {
 };
 
 /**
+ * Body_transfers-import_components_csv
+ */
+export type Body_transfers_import_components_csv = {
+    /**
+     * File
+     */
+    file: Blob | File;
+};
+
+/**
+ * ComponentCreate
+ */
+export type ComponentCreate = {
+    /**
+     * Purl
+     */
+    purl: string;
+    /**
+     * Cpe
+     */
+    cpe?: string | null;
+    /**
+     * Ecosystem
+     */
+    ecosystem?: string | null;
+    /**
+     * Vendor
+     */
+    vendor?: string | null;
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Version
+     */
+    version?: string | null;
+    /**
+     * License
+     */
+    license?: string | null;
+    /**
+     * Description
+     */
+    description?: string | null;
+    /**
+     * Repository
+     */
+    repository?: string | null;
+    /**
+     * Publish Date
+     */
+    publish_date?: string | null;
+    /**
+     * Language
+     */
+    language?: string | null;
+    /**
+     * Source Record Time
+     */
+    source_record_time?: string | null;
+};
+
+/**
+ * ComponentImportResult
+ */
+export type ComponentImportResult = {
+    /**
+     * Created
+     */
+    created: number;
+    /**
+     * Updated
+     */
+    updated: number;
+    /**
+     * Skipped
+     */
+    skipped: number;
+    /**
+     * Failed
+     */
+    failed: number;
+    /**
+     * Issues
+     */
+    issues: Array<ImportIssue>;
+};
+
+/**
+ * ComponentPublic
+ */
+export type ComponentPublic = {
+    /**
+     * Purl
+     */
+    purl: string;
+    /**
+     * Cpe
+     */
+    cpe?: string | null;
+    /**
+     * Ecosystem
+     */
+    ecosystem?: string | null;
+    /**
+     * Vendor
+     */
+    vendor?: string | null;
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Version
+     */
+    version?: string | null;
+    /**
+     * License
+     */
+    license?: string | null;
+    /**
+     * Description
+     */
+    description?: string | null;
+    /**
+     * Repository
+     */
+    repository?: string | null;
+    /**
+     * Publish Date
+     */
+    publish_date?: string | null;
+    /**
+     * Language
+     */
+    language?: string | null;
+    /**
+     * Source Record Time
+     */
+    source_record_time?: string | null;
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Created At
+     */
+    created_at: string;
+    /**
+     * Updated At
+     */
+    updated_at: string;
+};
+
+/**
+ * ComponentUpdate
+ */
+export type ComponentUpdate = {
+    /**
+     * Purl
+     */
+    purl?: string | null;
+    /**
+     * Cpe
+     */
+    cpe?: string | null;
+    /**
+     * Ecosystem
+     */
+    ecosystem?: string | null;
+    /**
+     * Vendor
+     */
+    vendor?: string | null;
+    /**
+     * Name
+     */
+    name?: string | null;
+    /**
+     * Version
+     */
+    version?: string | null;
+    /**
+     * License
+     */
+    license?: string | null;
+    /**
+     * Description
+     */
+    description?: string | null;
+    /**
+     * Repository
+     */
+    repository?: string | null;
+    /**
+     * Publish Date
+     */
+    publish_date?: string | null;
+    /**
+     * Language
+     */
+    language?: string | null;
+};
+
+/**
+ * ComponentsPublic
+ */
+export type ComponentsPublic = {
+    /**
+     * Data
+     */
+    data: Array<ComponentPublic>;
+    /**
+     * Count
+     */
+    count: number;
+};
+
+/**
+ * DashboardBucket
+ */
+export type DashboardBucket = {
+    /**
+     * Label
+     */
+    label: string;
+    /**
+     * Count
+     */
+    count: number;
+};
+
+/**
+ * DashboardRiskComponent
+ */
+export type DashboardRiskComponent = {
+    /**
+     * Component Id
+     */
+    component_id: string;
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Purl
+     */
+    purl: string;
+    /**
+     * Critical Count
+     */
+    critical_count: number;
+    /**
+     * High Count
+     */
+    high_count: number;
+    /**
+     * Total Count
+     */
+    total_count: number;
+};
+
+/**
+ * DashboardSummary
+ */
+export type DashboardSummary = {
+    /**
+     * Vulnerability Count
+     */
+    vulnerability_count: number;
+    /**
+     * Component Count
+     */
+    component_count: number;
+    /**
+     * Association Count
+     */
+    association_count: number;
+    /**
+     * Pending Risk Count
+     */
+    pending_risk_count: number;
+    /**
+     * Severity Distribution
+     */
+    severity_distribution: Array<DashboardBucket>;
+    /**
+     * Cvss Distribution
+     */
+    cvss_distribution: Array<DashboardBucket>;
+    /**
+     * Publication Trend
+     */
+    publication_trend: Array<DashboardBucket>;
+    /**
+     * Remediation Distribution
+     */
+    remediation_distribution: Array<DashboardBucket>;
+    /**
+     * High Risk Components
+     */
+    high_risk_components: Array<DashboardRiskComponent>;
+};
+
+/**
  * HTTPValidationError
  */
 export type HTTPValidationError = {
@@ -42,6 +429,20 @@ export type HTTPValidationError = {
      * Detail
      */
     detail?: Array<ValidationError>;
+};
+
+/**
+ * ImportIssue
+ */
+export type ImportIssue = {
+    /**
+     * Row
+     */
+    row: number;
+    /**
+     * Message
+     */
+    message: string;
 };
 
 /**
@@ -113,6 +514,11 @@ export type ItemsPublic = {
 };
 
 /**
+ * MatchMethod
+ */
+export type MatchMethod = 'MANUAL' | 'CPE' | 'NAME' | 'IMPORT';
+
+/**
  * Message
  */
 export type Message = {
@@ -159,6 +565,186 @@ export type PrivateUserCreate = {
 };
 
 /**
+ * RemediationCreate
+ */
+export type RemediationCreate = {
+    /**
+     * Vulnerability Id
+     */
+    vulnerability_id: string;
+    /**
+     * Component Id
+     */
+    component_id: string;
+    status?: RemediationStatus;
+    /**
+     * Assignee Id
+     */
+    assignee_id?: string | null;
+    /**
+     * Notes
+     */
+    notes?: string | null;
+    /**
+     * Due Date
+     */
+    due_date?: string | null;
+    /**
+     * Fixed Version
+     */
+    fixed_version?: string | null;
+};
+
+/**
+ * RemediationPublic
+ */
+export type RemediationPublic = {
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Vulnerability Id
+     */
+    vulnerability_id: string;
+    /**
+     * Component Id
+     */
+    component_id: string | null;
+    status: RemediationStatus;
+    /**
+     * Assignee Id
+     */
+    assignee_id: string | null;
+    /**
+     * Assignee Name
+     */
+    assignee_name?: string | null;
+    /**
+     * Notes
+     */
+    notes: string | null;
+    /**
+     * Due Date
+     */
+    due_date: string | null;
+    /**
+     * Fixed Version
+     */
+    fixed_version: string | null;
+    /**
+     * Created At
+     */
+    created_at: string;
+    /**
+     * Updated At
+     */
+    updated_at: string;
+    /**
+     * Cve Id
+     */
+    cve_id: string;
+    /**
+     * Component Name
+     */
+    component_name: string | null;
+    /**
+     * Component Purl
+     */
+    component_purl?: string | null;
+    vulnerability_severity?: Severity | null;
+};
+
+/**
+ * RemediationStatus
+ */
+export type RemediationStatus = 'PENDING' | 'IN_PROGRESS' | 'FIXED' | 'IGNORED';
+
+/**
+ * RemediationSummary
+ */
+export type RemediationSummary = {
+    /**
+     * Total
+     */
+    total: number;
+    /**
+     * Pending
+     */
+    pending: number;
+    /**
+     * In Progress
+     */
+    in_progress: number;
+    /**
+     * Fixed
+     */
+    fixed: number;
+    /**
+     * Ignored
+     */
+    ignored: number;
+    /**
+     * Overdue
+     */
+    overdue: number;
+    /**
+     * Due Soon
+     */
+    due_soon: number;
+    /**
+     * Completed This Month
+     */
+    completed_this_month: number;
+    /**
+     * Completion Rate
+     */
+    completion_rate: number;
+};
+
+/**
+ * RemediationUpdate
+ */
+export type RemediationUpdate = {
+    status?: RemediationStatus | null;
+    /**
+     * Assignee Id
+     */
+    assignee_id?: string | null;
+    /**
+     * Notes
+     */
+    notes?: string | null;
+    /**
+     * Due Date
+     */
+    due_date?: string | null;
+    /**
+     * Fixed Version
+     */
+    fixed_version?: string | null;
+};
+
+/**
+ * RemediationsPublic
+ */
+export type RemediationsPublic = {
+    /**
+     * Data
+     */
+    data: Array<RemediationPublic>;
+    /**
+     * Count
+     */
+    count: number;
+};
+
+/**
+ * Severity
+ */
+export type Severity = 'CRITICAL' | 'HIGH' | 'MEDIUM' | 'LOW' | 'UNKNOWN';
+
+/**
  * Token
  */
 export type Token = {
@@ -202,6 +788,7 @@ export type UserCreate = {
      * Is Superuser
      */
     is_superuser?: boolean;
+    role?: UserRole;
     /**
      * Full Name
      */
@@ -228,6 +815,7 @@ export type UserPublic = {
      * Is Superuser
      */
     is_superuser?: boolean;
+    role?: UserRole;
     /**
      * Full Name
      */
@@ -261,6 +849,11 @@ export type UserRegister = {
 };
 
 /**
+ * UserRole
+ */
+export type UserRole = 'ADMIN' | 'SECURITY' | 'VIEWER';
+
+/**
  * UserUpdate
  */
 export type UserUpdate = {
@@ -276,6 +869,7 @@ export type UserUpdate = {
      * Is Superuser
      */
     is_superuser?: boolean | null;
+    role?: UserRole | null;
     /**
      * Full Name
      */
@@ -340,6 +934,321 @@ export type ValidationError = {
     ctx?: {
         [key: string]: unknown;
     };
+};
+
+/**
+ * VulnerabilitiesPublic
+ */
+export type VulnerabilitiesPublic = {
+    /**
+     * Data
+     */
+    data: Array<VulnerabilityPublic>;
+    /**
+     * Count
+     */
+    count: number;
+};
+
+/**
+ * VulnerabilityComponentCreate
+ */
+export type VulnerabilityComponentCreate = {
+    /**
+     * Vulnerability Id
+     */
+    vulnerability_id: string;
+    /**
+     * Component Id
+     */
+    component_id: string;
+    /**
+     * Affected Version Range
+     */
+    affected_version_range?: string | null;
+    /**
+     * Source Reference
+     */
+    source_reference?: string | null;
+    /**
+     * Notes
+     */
+    notes?: string | null;
+    match_method?: MatchMethod;
+};
+
+/**
+ * VulnerabilityComponentPublic
+ */
+export type VulnerabilityComponentPublic = {
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Vulnerability Id
+     */
+    vulnerability_id: string;
+    /**
+     * Component Id
+     */
+    component_id: string;
+    status: AssociationStatus;
+    match_method: MatchMethod;
+    /**
+     * Confidence
+     */
+    confidence: string | null;
+    /**
+     * Affected Version Range
+     */
+    affected_version_range: string | null;
+    /**
+     * Source Reference
+     */
+    source_reference: string | null;
+    /**
+     * Notes
+     */
+    notes: string | null;
+    /**
+     * Confirmed By Id
+     */
+    confirmed_by_id: string | null;
+    /**
+     * Created At
+     */
+    created_at: string;
+    /**
+     * Updated At
+     */
+    updated_at: string;
+    /**
+     * Cve Id
+     */
+    cve_id: string;
+    severity: Severity;
+    /**
+     * Component Name
+     */
+    component_name: string;
+    /**
+     * Component Purl
+     */
+    component_purl: string;
+};
+
+/**
+ * VulnerabilityComponentsPublic
+ */
+export type VulnerabilityComponentsPublic = {
+    /**
+     * Data
+     */
+    data: Array<VulnerabilityComponentPublic>;
+    /**
+     * Count
+     */
+    count: number;
+};
+
+/**
+ * VulnerabilityCreate
+ *
+ * Used by trusted import and optional administrator creation workflows.
+ */
+export type VulnerabilityCreate = {
+    /**
+     * Cve Id
+     */
+    cve_id: string;
+    /**
+     * Source Id
+     */
+    source_id?: string | null;
+    /**
+     * Source Name
+     */
+    source_name?: string | null;
+    /**
+     * Source Publish Date
+     */
+    source_publish_date?: string | null;
+    /**
+     * Source Update Date
+     */
+    source_update_date?: string | null;
+    /**
+     * Source Link
+     */
+    source_link?: string | null;
+    /**
+     * Affected Versions
+     */
+    affected_versions?: Array<string>;
+    /**
+     * Cvss Score V4
+     */
+    cvss_score_v4?: number | string | null;
+    /**
+     * Cvss Score V3
+     */
+    cvss_score_v3?: number | string | null;
+    /**
+     * Cvss Score V2
+     */
+    cvss_score_v2?: number | string | null;
+    severity?: Severity;
+    /**
+     * Vulnerability Type
+     */
+    vulnerability_type?: string | null;
+    /**
+     * Cwe Ids
+     */
+    cwe_ids?: Array<string>;
+    /**
+     * Description
+     */
+    description?: string | null;
+    /**
+     * Title
+     */
+    title?: string | null;
+};
+
+/**
+ * VulnerabilityPublic
+ */
+export type VulnerabilityPublic = {
+    /**
+     * Cve Id
+     */
+    cve_id: string;
+    /**
+     * Source Id
+     */
+    source_id?: string | null;
+    /**
+     * Source Name
+     */
+    source_name?: string | null;
+    /**
+     * Source Publish Date
+     */
+    source_publish_date?: string | null;
+    /**
+     * Source Update Date
+     */
+    source_update_date?: string | null;
+    /**
+     * Source Link
+     */
+    source_link?: string | null;
+    /**
+     * Affected Versions
+     */
+    affected_versions?: Array<string>;
+    /**
+     * Cvss Score V4
+     */
+    cvss_score_v4?: string | null;
+    /**
+     * Cvss Score V3
+     */
+    cvss_score_v3?: string | null;
+    /**
+     * Cvss Score V2
+     */
+    cvss_score_v2?: string | null;
+    severity?: Severity;
+    /**
+     * Vulnerability Type
+     */
+    vulnerability_type?: string | null;
+    /**
+     * Cwe Ids
+     */
+    cwe_ids?: Array<string>;
+    /**
+     * Description
+     */
+    description?: string | null;
+    /**
+     * Title
+     */
+    title?: string | null;
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Created At
+     */
+    created_at: string;
+    /**
+     * Updated At
+     */
+    updated_at: string;
+};
+
+/**
+ * VulnerabilityUpdate
+ */
+export type VulnerabilityUpdate = {
+    /**
+     * Cve Id
+     */
+    cve_id?: null;
+    /**
+     * Source Name
+     */
+    source_name?: string | null;
+    /**
+     * Source Publish Date
+     */
+    source_publish_date?: string | null;
+    /**
+     * Source Update Date
+     */
+    source_update_date?: string | null;
+    /**
+     * Source Link
+     */
+    source_link?: string | null;
+    /**
+     * Affected Versions
+     */
+    affected_versions?: Array<string> | null;
+    /**
+     * Cvss Score V4
+     */
+    cvss_score_v4?: number | string | null;
+    /**
+     * Cvss Score V3
+     */
+    cvss_score_v3?: number | string | null;
+    /**
+     * Cvss Score V2
+     */
+    cvss_score_v2?: number | string | null;
+    severity?: Severity | null;
+    /**
+     * Vulnerability Type
+     */
+    vulnerability_type?: string | null;
+    /**
+     * Cwe Ids
+     */
+    cwe_ids?: Array<string> | null;
+    /**
+     * Description
+     */
+    description?: string | null;
+    /**
+     * Title
+     */
+    title?: string | null;
 };
 
 export type loginLoginAccessTokenData = {
@@ -920,6 +1829,851 @@ export type itemsUpdateItemResponses = {
 };
 
 export type itemsUpdateItemResponse = itemsUpdateItemResponses[keyof itemsUpdateItemResponses];
+
+export type vulnerabilitiesReadVulnerabilitiesData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Skip
+         */
+        skip?: number;
+        /**
+         * Limit
+         */
+        limit?: number;
+        /**
+         * Search
+         */
+        search?: string | null;
+        /**
+         * Severity
+         */
+        severity?: Severity | null;
+        /**
+         * Source Name
+         */
+        source_name?: string | null;
+        /**
+         * Min Cvss
+         */
+        min_cvss?: number | string | null;
+        /**
+         * Max Cvss
+         */
+        max_cvss?: number | string | null;
+        /**
+         * Published From
+         */
+        published_from?: string | null;
+        /**
+         * Published To
+         */
+        published_to?: string | null;
+    };
+    url: '/api/v1/vulnerabilities/';
+};
+
+export type vulnerabilitiesReadVulnerabilitiesErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type vulnerabilitiesReadVulnerabilitiesError = vulnerabilitiesReadVulnerabilitiesErrors[keyof vulnerabilitiesReadVulnerabilitiesErrors];
+
+export type vulnerabilitiesReadVulnerabilitiesResponses = {
+    /**
+     * Successful Response
+     */
+    200: VulnerabilitiesPublic;
+};
+
+export type vulnerabilitiesReadVulnerabilitiesResponse = vulnerabilitiesReadVulnerabilitiesResponses[keyof vulnerabilitiesReadVulnerabilitiesResponses];
+
+export type vulnerabilitiesCreateVulnerabilityData = {
+    body: VulnerabilityCreate;
+    path?: never;
+    query?: never;
+    url: '/api/v1/vulnerabilities/';
+};
+
+export type vulnerabilitiesCreateVulnerabilityErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type vulnerabilitiesCreateVulnerabilityError = vulnerabilitiesCreateVulnerabilityErrors[keyof vulnerabilitiesCreateVulnerabilityErrors];
+
+export type vulnerabilitiesCreateVulnerabilityResponses = {
+    /**
+     * Successful Response
+     */
+    201: VulnerabilityPublic;
+};
+
+export type vulnerabilitiesCreateVulnerabilityResponse = vulnerabilitiesCreateVulnerabilityResponses[keyof vulnerabilitiesCreateVulnerabilityResponses];
+
+export type vulnerabilitiesDeleteVulnerabilityData = {
+    body?: never;
+    path: {
+        /**
+         * Vulnerability Id
+         */
+        vulnerability_id: string;
+    };
+    query?: never;
+    url: '/api/v1/vulnerabilities/{vulnerability_id}';
+};
+
+export type vulnerabilitiesDeleteVulnerabilityErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type vulnerabilitiesDeleteVulnerabilityError = vulnerabilitiesDeleteVulnerabilityErrors[keyof vulnerabilitiesDeleteVulnerabilityErrors];
+
+export type vulnerabilitiesDeleteVulnerabilityResponses = {
+    /**
+     * Successful Response
+     */
+    200: Message;
+};
+
+export type vulnerabilitiesDeleteVulnerabilityResponse = vulnerabilitiesDeleteVulnerabilityResponses[keyof vulnerabilitiesDeleteVulnerabilityResponses];
+
+export type vulnerabilitiesReadVulnerabilityData = {
+    body?: never;
+    path: {
+        /**
+         * Vulnerability Id
+         */
+        vulnerability_id: string;
+    };
+    query?: never;
+    url: '/api/v1/vulnerabilities/{vulnerability_id}';
+};
+
+export type vulnerabilitiesReadVulnerabilityErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type vulnerabilitiesReadVulnerabilityError = vulnerabilitiesReadVulnerabilityErrors[keyof vulnerabilitiesReadVulnerabilityErrors];
+
+export type vulnerabilitiesReadVulnerabilityResponses = {
+    /**
+     * Successful Response
+     */
+    200: VulnerabilityPublic;
+};
+
+export type vulnerabilitiesReadVulnerabilityResponse = vulnerabilitiesReadVulnerabilityResponses[keyof vulnerabilitiesReadVulnerabilityResponses];
+
+export type vulnerabilitiesUpdateVulnerabilityData = {
+    body: VulnerabilityUpdate;
+    path: {
+        /**
+         * Vulnerability Id
+         */
+        vulnerability_id: string;
+    };
+    query?: never;
+    url: '/api/v1/vulnerabilities/{vulnerability_id}';
+};
+
+export type vulnerabilitiesUpdateVulnerabilityErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type vulnerabilitiesUpdateVulnerabilityError = vulnerabilitiesUpdateVulnerabilityErrors[keyof vulnerabilitiesUpdateVulnerabilityErrors];
+
+export type vulnerabilitiesUpdateVulnerabilityResponses = {
+    /**
+     * Successful Response
+     */
+    200: VulnerabilityPublic;
+};
+
+export type vulnerabilitiesUpdateVulnerabilityResponse = vulnerabilitiesUpdateVulnerabilityResponses[keyof vulnerabilitiesUpdateVulnerabilityResponses];
+
+export type componentsReadComponentsData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Skip
+         */
+        skip?: number;
+        /**
+         * Limit
+         */
+        limit?: number;
+        /**
+         * Search
+         */
+        search?: string | null;
+        /**
+         * Ecosystem
+         */
+        ecosystem?: string | null;
+        /**
+         * Language
+         */
+        language?: string | null;
+        /**
+         * Vendor
+         */
+        vendor?: string | null;
+    };
+    url: '/api/v1/components/';
+};
+
+export type componentsReadComponentsErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type componentsReadComponentsError = componentsReadComponentsErrors[keyof componentsReadComponentsErrors];
+
+export type componentsReadComponentsResponses = {
+    /**
+     * Successful Response
+     */
+    200: ComponentsPublic;
+};
+
+export type componentsReadComponentsResponse = componentsReadComponentsResponses[keyof componentsReadComponentsResponses];
+
+export type componentsCreateComponentData = {
+    body: ComponentCreate;
+    path?: never;
+    query?: never;
+    url: '/api/v1/components/';
+};
+
+export type componentsCreateComponentErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type componentsCreateComponentError = componentsCreateComponentErrors[keyof componentsCreateComponentErrors];
+
+export type componentsCreateComponentResponses = {
+    /**
+     * Successful Response
+     */
+    201: ComponentPublic;
+};
+
+export type componentsCreateComponentResponse = componentsCreateComponentResponses[keyof componentsCreateComponentResponses];
+
+export type componentsDeleteComponentData = {
+    body?: never;
+    path: {
+        /**
+         * Component Id
+         */
+        component_id: string;
+    };
+    query?: never;
+    url: '/api/v1/components/{component_id}';
+};
+
+export type componentsDeleteComponentErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type componentsDeleteComponentError = componentsDeleteComponentErrors[keyof componentsDeleteComponentErrors];
+
+export type componentsDeleteComponentResponses = {
+    /**
+     * Successful Response
+     */
+    200: Message;
+};
+
+export type componentsDeleteComponentResponse = componentsDeleteComponentResponses[keyof componentsDeleteComponentResponses];
+
+export type componentsReadComponentData = {
+    body?: never;
+    path: {
+        /**
+         * Component Id
+         */
+        component_id: string;
+    };
+    query?: never;
+    url: '/api/v1/components/{component_id}';
+};
+
+export type componentsReadComponentErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type componentsReadComponentError = componentsReadComponentErrors[keyof componentsReadComponentErrors];
+
+export type componentsReadComponentResponses = {
+    /**
+     * Successful Response
+     */
+    200: ComponentPublic;
+};
+
+export type componentsReadComponentResponse = componentsReadComponentResponses[keyof componentsReadComponentResponses];
+
+export type componentsUpdateComponentData = {
+    body: ComponentUpdate;
+    path: {
+        /**
+         * Component Id
+         */
+        component_id: string;
+    };
+    query?: never;
+    url: '/api/v1/components/{component_id}';
+};
+
+export type componentsUpdateComponentErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type componentsUpdateComponentError = componentsUpdateComponentErrors[keyof componentsUpdateComponentErrors];
+
+export type componentsUpdateComponentResponses = {
+    /**
+     * Successful Response
+     */
+    200: ComponentPublic;
+};
+
+export type componentsUpdateComponentResponse = componentsUpdateComponentResponses[keyof componentsUpdateComponentResponses];
+
+export type associationsReadAssociationsData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Vulnerability Id
+         */
+        vulnerability_id?: string | null;
+        /**
+         * Component Id
+         */
+        component_id?: string | null;
+        /**
+         * Skip
+         */
+        skip?: number;
+        /**
+         * Limit
+         */
+        limit?: number;
+    };
+    url: '/api/v1/associations/';
+};
+
+export type associationsReadAssociationsErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type associationsReadAssociationsError = associationsReadAssociationsErrors[keyof associationsReadAssociationsErrors];
+
+export type associationsReadAssociationsResponses = {
+    /**
+     * Successful Response
+     */
+    200: VulnerabilityComponentsPublic;
+};
+
+export type associationsReadAssociationsResponse = associationsReadAssociationsResponses[keyof associationsReadAssociationsResponses];
+
+export type associationsCreateAssociationData = {
+    body: VulnerabilityComponentCreate;
+    path?: never;
+    query?: never;
+    url: '/api/v1/associations/';
+};
+
+export type associationsCreateAssociationErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type associationsCreateAssociationError = associationsCreateAssociationErrors[keyof associationsCreateAssociationErrors];
+
+export type associationsCreateAssociationResponses = {
+    /**
+     * Successful Response
+     */
+    201: VulnerabilityComponentPublic;
+};
+
+export type associationsCreateAssociationResponse = associationsCreateAssociationResponses[keyof associationsCreateAssociationResponses];
+
+export type associationsReadAssociationSuggestionsData = {
+    body?: never;
+    path?: never;
+    query: {
+        /**
+         * Vulnerability Id
+         */
+        vulnerability_id: string;
+        /**
+         * Limit
+         */
+        limit?: number;
+    };
+    url: '/api/v1/associations/suggestions';
+};
+
+export type associationsReadAssociationSuggestionsErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type associationsReadAssociationSuggestionsError = associationsReadAssociationSuggestionsErrors[keyof associationsReadAssociationSuggestionsErrors];
+
+export type associationsReadAssociationSuggestionsResponses = {
+    /**
+     * Response Associations-Read Association Suggestions
+     *
+     * Successful Response
+     */
+    200: Array<AssociationSuggestion>;
+};
+
+export type associationsReadAssociationSuggestionsResponse = associationsReadAssociationSuggestionsResponses[keyof associationsReadAssociationSuggestionsResponses];
+
+export type associationsDeleteAssociationData = {
+    body?: never;
+    path: {
+        /**
+         * Association Id
+         */
+        association_id: string;
+    };
+    query?: never;
+    url: '/api/v1/associations/{association_id}';
+};
+
+export type associationsDeleteAssociationErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type associationsDeleteAssociationError = associationsDeleteAssociationErrors[keyof associationsDeleteAssociationErrors];
+
+export type associationsDeleteAssociationResponses = {
+    /**
+     * Successful Response
+     */
+    200: Message;
+};
+
+export type associationsDeleteAssociationResponse = associationsDeleteAssociationResponses[keyof associationsDeleteAssociationResponses];
+
+export type dashboardReadDashboardSummaryData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/v1/dashboard/summary';
+};
+
+export type dashboardReadDashboardSummaryResponses = {
+    /**
+     * Successful Response
+     */
+    200: DashboardSummary;
+};
+
+export type dashboardReadDashboardSummaryResponse = dashboardReadDashboardSummaryResponses[keyof dashboardReadDashboardSummaryResponses];
+
+export type remediationsReadRemediationsData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Vulnerability Id
+         */
+        vulnerability_id?: string | null;
+        /**
+         * Component Id
+         */
+        component_id?: string | null;
+        /**
+         * Search
+         */
+        search?: string | null;
+        /**
+         * Status
+         */
+        status?: RemediationStatus | null;
+        /**
+         * Severity
+         */
+        severity?: Severity | null;
+        /**
+         * Assignee Id
+         */
+        assignee_id?: string | null;
+        /**
+         * Due From
+         */
+        due_from?: string | null;
+        /**
+         * Due To
+         */
+        due_to?: string | null;
+        /**
+         * Overdue Only
+         */
+        overdue_only?: boolean;
+        /**
+         * Due Soon Only
+         */
+        due_soon_only?: boolean;
+        /**
+         * My Only
+         */
+        my_only?: boolean;
+        /**
+         * Skip
+         */
+        skip?: number;
+        /**
+         * Limit
+         */
+        limit?: number;
+    };
+    url: '/api/v1/remediations/';
+};
+
+export type remediationsReadRemediationsErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type remediationsReadRemediationsError = remediationsReadRemediationsErrors[keyof remediationsReadRemediationsErrors];
+
+export type remediationsReadRemediationsResponses = {
+    /**
+     * Successful Response
+     */
+    200: RemediationsPublic;
+};
+
+export type remediationsReadRemediationsResponse = remediationsReadRemediationsResponses[keyof remediationsReadRemediationsResponses];
+
+export type remediationsCreateRemediationData = {
+    body: RemediationCreate;
+    path?: never;
+    query?: never;
+    url: '/api/v1/remediations/';
+};
+
+export type remediationsCreateRemediationErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type remediationsCreateRemediationError = remediationsCreateRemediationErrors[keyof remediationsCreateRemediationErrors];
+
+export type remediationsCreateRemediationResponses = {
+    /**
+     * Successful Response
+     */
+    201: RemediationPublic;
+};
+
+export type remediationsCreateRemediationResponse = remediationsCreateRemediationResponses[keyof remediationsCreateRemediationResponses];
+
+export type remediationsReadRemediationSummaryData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * My Only
+         */
+        my_only?: boolean;
+    };
+    url: '/api/v1/remediations/summary';
+};
+
+export type remediationsReadRemediationSummaryErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type remediationsReadRemediationSummaryError = remediationsReadRemediationSummaryErrors[keyof remediationsReadRemediationSummaryErrors];
+
+export type remediationsReadRemediationSummaryResponses = {
+    /**
+     * Successful Response
+     */
+    200: RemediationSummary;
+};
+
+export type remediationsReadRemediationSummaryResponse = remediationsReadRemediationSummaryResponses[keyof remediationsReadRemediationSummaryResponses];
+
+export type remediationsDeleteRemediationData = {
+    body?: never;
+    path: {
+        /**
+         * Remediation Id
+         */
+        remediation_id: string;
+    };
+    query?: never;
+    url: '/api/v1/remediations/{remediation_id}';
+};
+
+export type remediationsDeleteRemediationErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type remediationsDeleteRemediationError = remediationsDeleteRemediationErrors[keyof remediationsDeleteRemediationErrors];
+
+export type remediationsDeleteRemediationResponses = {
+    /**
+     * Successful Response
+     */
+    200: Message;
+};
+
+export type remediationsDeleteRemediationResponse = remediationsDeleteRemediationResponses[keyof remediationsDeleteRemediationResponses];
+
+export type remediationsUpdateRemediationData = {
+    body: RemediationUpdate;
+    path: {
+        /**
+         * Remediation Id
+         */
+        remediation_id: string;
+    };
+    query?: never;
+    url: '/api/v1/remediations/{remediation_id}';
+};
+
+export type remediationsUpdateRemediationErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type remediationsUpdateRemediationError = remediationsUpdateRemediationErrors[keyof remediationsUpdateRemediationErrors];
+
+export type remediationsUpdateRemediationResponses = {
+    /**
+     * Successful Response
+     */
+    200: RemediationPublic;
+};
+
+export type remediationsUpdateRemediationResponse = remediationsUpdateRemediationResponses[keyof remediationsUpdateRemediationResponses];
+
+export type auditLogsReadAuditLogsData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Skip
+         */
+        skip?: number;
+        /**
+         * Limit
+         */
+        limit?: number;
+        /**
+         * Action
+         */
+        action?: AuditAction | null;
+        /**
+         * Resource Type
+         */
+        resource_type?: string | null;
+        /**
+         * Actor Id
+         */
+        actor_id?: string | null;
+        /**
+         * Created From
+         */
+        created_from?: string | null;
+        /**
+         * Created To
+         */
+        created_to?: string | null;
+    };
+    url: '/api/v1/audit-logs/';
+};
+
+export type auditLogsReadAuditLogsErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type auditLogsReadAuditLogsError = auditLogsReadAuditLogsErrors[keyof auditLogsReadAuditLogsErrors];
+
+export type auditLogsReadAuditLogsResponses = {
+    /**
+     * Successful Response
+     */
+    200: AuditLogsPublic;
+};
+
+export type auditLogsReadAuditLogsResponse = auditLogsReadAuditLogsResponses[keyof auditLogsReadAuditLogsResponses];
+
+export type transfersImportComponentsCsvData = {
+    body: Body_transfers_import_components_csv;
+    path?: never;
+    query?: never;
+    url: '/api/v1/transfers/components/import';
+};
+
+export type transfersImportComponentsCsvErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type transfersImportComponentsCsvError = transfersImportComponentsCsvErrors[keyof transfersImportComponentsCsvErrors];
+
+export type transfersImportComponentsCsvResponses = {
+    /**
+     * Successful Response
+     */
+    200: ComponentImportResult;
+};
+
+export type transfersImportComponentsCsvResponse = transfersImportComponentsCsvResponses[keyof transfersImportComponentsCsvResponses];
+
+export type transfersExportComponentsCsvData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Search
+         */
+        search?: string | null;
+        /**
+         * Ecosystem
+         */
+        ecosystem?: string | null;
+    };
+    url: '/api/v1/transfers/components/export';
+};
+
+export type transfersExportComponentsCsvErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type transfersExportComponentsCsvError = transfersExportComponentsCsvErrors[keyof transfersExportComponentsCsvErrors];
+
+export type transfersExportComponentsCsvResponses = {
+    /**
+     * Successful Response
+     */
+    200: unknown;
+};
+
+export type transfersExportVulnerabilitiesCsvData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Search
+         */
+        search?: string | null;
+        /**
+         * Severity
+         */
+        severity?: Severity | null;
+        /**
+         * High Risk Only
+         */
+        high_risk_only?: boolean;
+    };
+    url: '/api/v1/transfers/vulnerabilities/export';
+};
+
+export type transfersExportVulnerabilitiesCsvErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type transfersExportVulnerabilitiesCsvError = transfersExportVulnerabilitiesCsvErrors[keyof transfersExportVulnerabilitiesCsvErrors];
+
+export type transfersExportVulnerabilitiesCsvResponses = {
+    /**
+     * Successful Response
+     */
+    200: unknown;
+};
+
+export type transfersExportHighRiskComponentsData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/v1/transfers/high-risk-components/export';
+};
+
+export type transfersExportHighRiskComponentsResponses = {
+    /**
+     * Successful Response
+     */
+    200: unknown;
+};
 
 export type privateCreateUserData = {
     body: PrivateUserCreate;

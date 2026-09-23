@@ -16,8 +16,12 @@ import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as LayoutIndexRouteImport } from './routes/_layout/index'
 import { Route as LayoutAdminRouteImport } from './routes/_layout/admin'
+import { Route as LayoutAuditRouteImport } from './routes/_layout/audit'
+import { Route as LayoutComponentsRouteImport } from './routes/_layout/components'
 import { Route as LayoutItemsRouteImport } from './routes/_layout/items'
+import { Route as LayoutRemediationsRouteImport } from './routes/_layout/remediations'
 import { Route as LayoutSettingsRouteImport } from './routes/_layout/settings'
+import { Route as LayoutVulnerabilitiesRouteImport } from './routes/_layout/vulnerabilities'
 
 const LayoutRoute = LayoutRouteImport.update({
   id: '/_layout',
@@ -53,14 +57,34 @@ const LayoutAdminRoute = LayoutAdminRouteImport.update({
   path: '/admin',
   getParentRoute: () => LayoutRoute,
 } as any)
+const LayoutAuditRoute = LayoutAuditRouteImport.update({
+  id: '/audit',
+  path: '/audit',
+  getParentRoute: () => LayoutRoute,
+} as any)
+const LayoutComponentsRoute = LayoutComponentsRouteImport.update({
+  id: '/components',
+  path: '/components',
+  getParentRoute: () => LayoutRoute,
+} as any)
 const LayoutItemsRoute = LayoutItemsRouteImport.update({
   id: '/items',
   path: '/items',
   getParentRoute: () => LayoutRoute,
 } as any)
+const LayoutRemediationsRoute = LayoutRemediationsRouteImport.update({
+  id: '/remediations',
+  path: '/remediations',
+  getParentRoute: () => LayoutRoute,
+} as any)
 const LayoutSettingsRoute = LayoutSettingsRouteImport.update({
   id: '/settings',
   path: '/settings',
+  getParentRoute: () => LayoutRoute,
+} as any)
+const LayoutVulnerabilitiesRoute = LayoutVulnerabilitiesRouteImport.update({
+  id: '/vulnerabilities',
+  path: '/vulnerabilities',
   getParentRoute: () => LayoutRoute,
 } as any)
 
@@ -71,8 +95,12 @@ export interface FileRoutesByFullPath {
   '/reset-password': typeof ResetPasswordRoute
   '/signup': typeof SignupRoute
   '/admin': typeof LayoutAdminRoute
+  '/audit': typeof LayoutAuditRoute
+  '/components': typeof LayoutComponentsRoute
   '/items': typeof LayoutItemsRoute
+  '/remediations': typeof LayoutRemediationsRoute
   '/settings': typeof LayoutSettingsRoute
+  '/vulnerabilities': typeof LayoutVulnerabilitiesRoute
 }
 export interface FileRoutesByTo {
   '/login': typeof LoginRoute
@@ -80,8 +108,12 @@ export interface FileRoutesByTo {
   '/reset-password': typeof ResetPasswordRoute
   '/signup': typeof SignupRoute
   '/admin': typeof LayoutAdminRoute
+  '/audit': typeof LayoutAuditRoute
+  '/components': typeof LayoutComponentsRoute
   '/items': typeof LayoutItemsRoute
+  '/remediations': typeof LayoutRemediationsRoute
   '/settings': typeof LayoutSettingsRoute
+  '/vulnerabilities': typeof LayoutVulnerabilitiesRoute
   '/': typeof LayoutIndexRoute
 }
 export interface FileRoutesById {
@@ -92,8 +124,12 @@ export interface FileRoutesById {
   '/reset-password': typeof ResetPasswordRoute
   '/signup': typeof SignupRoute
   '/_layout/admin': typeof LayoutAdminRoute
+  '/_layout/audit': typeof LayoutAuditRoute
+  '/_layout/components': typeof LayoutComponentsRoute
   '/_layout/items': typeof LayoutItemsRoute
+  '/_layout/remediations': typeof LayoutRemediationsRoute
   '/_layout/settings': typeof LayoutSettingsRoute
+  '/_layout/vulnerabilities': typeof LayoutVulnerabilitiesRoute
   '/_layout/': typeof LayoutIndexRoute
 }
 export interface FileRouteTypes {
@@ -105,8 +141,12 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/signup'
     | '/admin'
+    | '/audit'
+    | '/components'
     | '/items'
+    | '/remediations'
     | '/settings'
+    | '/vulnerabilities'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/login'
@@ -114,8 +154,12 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/signup'
     | '/admin'
+    | '/audit'
+    | '/components'
     | '/items'
+    | '/remediations'
     | '/settings'
+    | '/vulnerabilities'
     | '/'
   id:
     | '__root__'
@@ -125,8 +169,12 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/signup'
     | '/_layout/admin'
+    | '/_layout/audit'
+    | '/_layout/components'
     | '/_layout/items'
+    | '/_layout/remediations'
     | '/_layout/settings'
+    | '/_layout/vulnerabilities'
     | '/_layout/'
   fileRoutesById: FileRoutesById
 }
@@ -189,11 +237,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutAdminRouteImport
       parentRoute: typeof LayoutRoute
     }
+    '/_layout/audit': {
+      id: '/_layout/audit'
+      path: '/audit'
+      fullPath: '/audit'
+      preLoaderRoute: typeof LayoutAuditRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/components': {
+      id: '/_layout/components'
+      path: '/components'
+      fullPath: '/components'
+      preLoaderRoute: typeof LayoutComponentsRouteImport
+      parentRoute: typeof LayoutRoute
+    }
     '/_layout/items': {
       id: '/_layout/items'
       path: '/items'
       fullPath: '/items'
       preLoaderRoute: typeof LayoutItemsRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/remediations': {
+      id: '/_layout/remediations'
+      path: '/remediations'
+      fullPath: '/remediations'
+      preLoaderRoute: typeof LayoutRemediationsRouteImport
       parentRoute: typeof LayoutRoute
     }
     '/_layout/settings': {
@@ -203,20 +272,35 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutSettingsRouteImport
       parentRoute: typeof LayoutRoute
     }
+    '/_layout/vulnerabilities': {
+      id: '/_layout/vulnerabilities'
+      path: '/vulnerabilities'
+      fullPath: '/vulnerabilities'
+      preLoaderRoute: typeof LayoutVulnerabilitiesRouteImport
+      parentRoute: typeof LayoutRoute
+    }
   }
 }
 
 interface LayoutRouteChildren {
   LayoutAdminRoute: typeof LayoutAdminRoute
+  LayoutAuditRoute: typeof LayoutAuditRoute
+  LayoutComponentsRoute: typeof LayoutComponentsRoute
   LayoutItemsRoute: typeof LayoutItemsRoute
+  LayoutRemediationsRoute: typeof LayoutRemediationsRoute
   LayoutSettingsRoute: typeof LayoutSettingsRoute
+  LayoutVulnerabilitiesRoute: typeof LayoutVulnerabilitiesRoute
   LayoutIndexRoute: typeof LayoutIndexRoute
 }
 
 const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutAdminRoute: LayoutAdminRoute,
+  LayoutAuditRoute: LayoutAuditRoute,
+  LayoutComponentsRoute: LayoutComponentsRoute,
   LayoutItemsRoute: LayoutItemsRoute,
+  LayoutRemediationsRoute: LayoutRemediationsRoute,
   LayoutSettingsRoute: LayoutSettingsRoute,
+  LayoutVulnerabilitiesRoute: LayoutVulnerabilitiesRoute,
   LayoutIndexRoute: LayoutIndexRoute,
 }
 

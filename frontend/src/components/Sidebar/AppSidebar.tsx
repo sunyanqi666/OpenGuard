@@ -1,4 +1,11 @@
-import { Briefcase, Home, Users } from "lucide-react"
+import {
+  Boxes,
+  ClipboardCheck,
+  ClipboardList,
+  Home,
+  ShieldAlert,
+  Users,
+} from "lucide-react"
 
 import { SidebarAppearance } from "@/components/Common/Appearance"
 import { Logo } from "@/components/Common/Logo"
@@ -13,19 +20,28 @@ import { type Item, Main } from "./Main"
 import { User } from "./User"
 
 const baseItems: Item[] = [
-  { icon: Home, title: "Dashboard", path: "/" },
-  { icon: Briefcase, title: "Items", path: "/items" },
+  { icon: Home, title: "仪表盘", path: "/" },
+  { icon: ShieldAlert, title: "CVE 漏洞", path: "/vulnerabilities" },
+  { icon: Boxes, title: "开源组件", path: "/components" },
+  { icon: ClipboardCheck, title: "处置工作台", path: "/remediations" },
 ]
 
 export function AppSidebar() {
   const { user: currentUser } = useAuth()
 
-  const items = currentUser?.is_superuser
-    ? [...baseItems, { icon: Users, title: "Admin", path: "/admin" }]
-    : baseItems
+  const canAudit = currentUser?.is_superuser || currentUser?.role === "SECURITY"
+  const items = [
+    ...baseItems,
+    ...(canAudit
+      ? [{ icon: ClipboardList, title: "审计日志", path: "/audit" }]
+      : []),
+    ...(currentUser?.is_superuser
+      ? [{ icon: Users, title: "用户管理", path: "/admin" }]
+      : []),
+  ]
 
   return (
-    <Sidebar collapsible="icon">
+    <Sidebar collapsible="icon" className="border-sidebar-border/70">
       <SidebarHeader className="px-4 py-6 group-data-[collapsible=icon]:px-0 group-data-[collapsible=icon]:items-center">
         <Logo variant="responsive" />
       </SidebarHeader>
